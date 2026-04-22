@@ -1,22 +1,25 @@
 import type { IRNode, PropValue } from "./ir.js";
 import type { Registry } from "./registry.js";
 
-function substituteProp(value: PropValue, props: Record<string, PropValue>): PropValue {
+function substituteProp(value: PropValue, props: Record<string, PropValue>): PropValue | undefined {
   if (typeof value === "string") {
     const m = value.match(/^\{\{\s*props\.([a-zA-Z_][a-zA-Z0-9_]*)\s*\}\}$/);
     if (m) {
       const v = props[m[1]];
-      return v === undefined ? null : v;
+      return v === undefined ? undefined : v;
     }
     return value.replace(/\{\{\s*props\.([a-zA-Z_][a-zA-Z0-9_]*)\s*\}\}/g, (_, k) => {
       const v = props[k];
       return v === undefined || v === null ? "" : String(v);
     });
   }
-  if (Array.isArray(value)) return value.map((v) => substituteProp(v, props));
+  if (Array.isArray(value)) return value.map((v) => substituteProp(v, props) ?? null);
   if (value && typeof value === "object") {
     const out: Record<string, PropValue> = {};
-    for (const [k, v] of Object.entries(value)) out[k] = substituteProp(v, props);
+    for (const [k, v] of Object.entries(value)) {
+      const sub = substituteProp(v, props);
+      if (sub !== undefined) out[k] = sub;
+    }
     return out;
   }
   return value;
@@ -25,7 +28,8 @@ function substituteProp(value: PropValue, props: Record<string, PropValue>): Pro
 function substituteNode(node: IRNode, props: Record<string, PropValue>): IRNode {
   const newProps: Record<string, PropValue> = {};
   for (const [k, v] of Object.entries(node.props)) {
-    newProps[k] = substituteProp(v, props);
+    const sub = substituteProp(v, props);
+    if (sub !== undefined) newProps[k] = sub;
   }
   return {
     kind: node.kind,
