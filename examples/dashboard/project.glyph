@@ -1,0 +1,160 @@
+target: web
+adapter: next
+project:
+  name: dashboard
+nodes:
+  - kind: app
+    props: {}
+    children:
+      - kind: page
+        props:
+          title: Dashboard
+        children:
+          - kind: row
+            props:
+              gap: 0
+              align: stretch
+            children:
+              - kind: sidebar
+                props:
+                  width: 240
+                children:
+                  - kind: heading
+                    props:
+                      value: "Glyph"
+                      level: "3"
+                  - kind: nav-item
+                    props:
+                      label: "Dashboard"
+                      href: "/"
+                  - kind: nav-item
+                    props:
+                      label: "Users"
+                      href: "/users"
+                  - kind: nav-item
+                    props:
+                      label: "Orders"
+                      href: "/orders"
+                  - kind: nav-item
+                    props:
+                      label: "Reports"
+                      href: "/reports"
+                  - kind: nav-item
+                    props:
+                      label: "Settings"
+                      href: "/settings"
+              - kind: column
+                props:
+                  gap: 0
+                children:
+                  - kind: topbar
+                    props:
+                      title: "Dashboard"
+                    children:
+                      - kind: search-bar
+                        props:
+                          placeholder: "Search..."
+                      - kind: avatar
+                        props:
+                          name: "Zee"
+                          size: 32
+                  - kind: box
+                    props:
+                      padding: "32px"
+                    children:
+                      - kind: column
+                        props:
+                          gap: 32
+                        children:
+                          - kind: grid
+                            props:
+                              columns: 3
+                              gap: 16
+                            children:
+                              - kind: metric
+                                props:
+                                  label: "Revenue"
+                                  value: "$48,291"
+                                  trend: "+12.4%"
+                              - kind: metric
+                                props:
+                                  label: "Active users"
+                                  value: "1,284"
+                                  trend: "+3.1%"
+                              - kind: metric
+                                props:
+                                  label: "Orders"
+                                  value: "362"
+                                  trend: "-0.8%"
+                          - kind: column
+                            props:
+                              gap: 12
+                            children:
+                              - kind: heading
+                                props:
+                                  value: "Recent orders"
+                                  level: "3"
+                              - kind: table
+                                props:
+                                  columns: "{{ [{key:'id',label:'Order'},{key:'customer',label:'Customer'},{key:'total',label:'Total'},{key:'status',label:'Status'}] }}"
+                                  rows: "{{ [{id:'#1042',customer:'Alice Chen',total:'$129.00',status:'Shipped'},{id:'#1041',customer:'Bob Singh',total:'$84.50',status:'Processing'},{id:'#1040',customer:'Carol Diaz',total:'$312.00',status:'Delivered'},{id:'#1039',customer:'Dan Reyes',total:'$58.25',status:'Cancelled'}] }}"
+                          - kind: column
+                            props:
+                              gap: 12
+                            children:
+                              - kind: heading
+                                props:
+                                  value: "Add product"
+                                  level: "3"
+                              - kind: box
+                                props:
+                                  padding: "20px"
+                                  border: "1px solid #e5e7eb"
+                                  radius: 8
+                                children:
+                                  - kind: column
+                                    props:
+                                      gap: 16
+                                    children:
+                                      - kind: field
+                                        props:
+                                          label: "Product name"
+                                          help: "Displayed in the storefront"
+                                        children:
+                                          - kind: text-input
+                                            props:
+                                              placeholder: "e.g. Headphones"
+                                      - kind: field
+                                        props:
+                                          label: "Category"
+                                        children:
+                                          - kind: select
+                                            props:
+                                              placeholder: "Pick a category"
+                                              options:
+                                                - { value: electronics, label: Electronics }
+                                                - { value: apparel, label: Apparel }
+                                                - { value: home, label: Home & garden }
+                                      - kind: row
+                                        props:
+                                          gap: 12
+                                          align: center
+                                        children:
+                                          - kind: switch
+                                            props: {}
+                                          - kind: text
+                                            props:
+                                              value: "Publish immediately"
+                                      - kind: row
+                                        props:
+                                          gap: 8
+                                          justify: end
+                                        children:
+                                          - kind: button
+                                            props:
+                                              label: "Cancel"
+                                              variant: "secondary"
+                                          - kind: button
+                                            props:
+                                              label: "Add product"
+                                              variant: "primary"

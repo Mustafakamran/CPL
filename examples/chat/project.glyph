@@ -1,0 +1,102 @@
+target: web
+adapter: next
+project:
+  name: chat
+nodes:
+  - kind: app
+    props: {}
+    children:
+      - kind: page
+        props:
+          title: Chat
+        children:
+          - kind: row
+            props:
+              gap: 0
+              align: stretch
+            children:
+              - kind: sidebar
+                props:
+                  width: 280
+                children:
+                  - kind: heading
+                    props:
+                      value: "Conversations"
+                      level: "4"
+                  - kind: list
+                    props: {}
+                    children:
+                      - kind: list-item
+                        props:
+                          title: "Alice Chen"
+                          subtitle: "Hey, are you around?"
+                      - kind: list-item
+                        props:
+                          title: "Bob Singh"
+                          subtitle: "Let's ship it."
+                      - kind: list-item
+                        props:
+                          title: "Carol Diaz"
+                          subtitle: "Thanks for the review!"
+              - kind: state
+                props:
+                  name: "input"
+                  initial: "{{ '' }}"
+                children:
+                  - kind: state
+                    props:
+                      name: "messages"
+                      initial: "{{ [{text: 'Hey, are you around?', mine: false, author: 'Alice'}, {text: 'Yeah, what\\'s up?', mine: true, author: 'Me'}, {text: 'Can you review the PR when you have a sec?', mine: false, author: 'Alice'}] }}"
+                    children:
+                      - kind: column
+                        props:
+                          gap: 0
+                        children:
+                          - kind: topbar
+                            props:
+                              title: "Alice Chen"
+                          - kind: box
+                            props:
+                              padding: "20px"
+                              height: "calc(100vh - 140px)"
+                            children:
+                              - kind: scroll-view
+                                props:
+                                  axis: "vertical"
+                                children:
+                                  - kind: column
+                                    props:
+                                      gap: 12
+                                    children:
+                                      - kind: repeat
+                                        props:
+                                          source: "{{ messages }}"
+                                          as: "m"
+                                          indexAs: "i"
+                                        children:
+                                          - kind: message-bubble
+                                            props:
+                                              text: "{{ m.text }}"
+                                              author: "{{ m.author }}"
+                                              mine: "{{ m.mine }}"
+                          - kind: box
+                            props:
+                              padding: "12px 20px"
+                              border: "1px solid #e5e7eb"
+                            children:
+                              - kind: row
+                                props:
+                                  gap: 8
+                                  align: end
+                                children:
+                                  - kind: textarea
+                                    props:
+                                      value: "{{ input }}"
+                                      onChange: "{{ setInput(e.target.value) }}"
+                                      placeholder: "Type a message..."
+                                      rows: 2
+                                  - kind: button
+                                    props:
+                                      label: "Send"
+                                      variant: "primary"
+                                      onClick: "{{ if (input.trim()) { setMessages([...messages, {text: input, mine: true, author: 'Me'}]); setInput(''); } }}"
