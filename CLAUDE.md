@@ -42,7 +42,12 @@ expressed by composing existing atoms.
 packages/
   core/                    IR, registry, validator, expander, 60 atom schemas
   cli/                     `glyph` binary
-  adapter-next/            Next.js/React — flagship web adapter (full 60 atom coverage)
+  adapter-next/            Next.js/React — flagship web adapter. Emits a
+                           Next.js 15 project styled with shadcn/ui + Tailwind
+                           CSS by default (Radix primitives, lucide-react
+                           icons). Full 60-atom coverage + native compound
+                           overrides (card, alert, badge, chip, skeleton,
+                           avatar, modal, tabs, tooltip, accordion, progress).
   adapter-tauri/           Tauri desktop — delegates atoms to adapter-next
   adapter-compose/         Jetpack Compose (Android) — v0 emits placeholder
                            Kotlin for every atom; full production emission is a
@@ -53,8 +58,16 @@ packages/
                            commerce, action, media). Target is ~150; purely
                            additive — no adapter work per compound.
 examples/
-  landing/                 End-to-end smoke test (web)
-  landing-android/         Same manifest, compose adapter
+  landing/                 Marketing landing page (web)
+  dashboard/               Admin dashboard: sidebar nav, KPI metrics, data
+                           table, product form (web)
+  chat/                    Chat UI: conversation list + message thread with
+                           live state via `state` + `repeat` atoms (web)
+  landing-android/         Same landing manifest, compose adapter
+scripts/
+  dev.sh                   One-command workflow: pull → install → build →
+                           regenerate example → run dev server.
+                           Usage: `./scripts/dev.sh [landing|dashboard|chat]`
 SPEC.md                    Language spec
 CLAUDE.md                  This file
 ```
@@ -73,12 +86,20 @@ The `glyph` CLI is built as a Node binary under
 
 ### End-to-end smoke test (web)
 
+Quick path — use the workflow script:
+
+```bash
+./scripts/dev.sh landing      # or: dashboard, chat
+```
+
+Manual path:
+
 ```bash
 cd examples/landing
 node ../../packages/cli/dist/index.js doctor       # expect: clean
 node ../../packages/cli/dist/index.js build --out ./out
-# out/ contains a Next.js 15 project. `cd out && npm install && npm run dev`
-# renders a topbar + hero + three-card feature grid.
+# out/ is a Next.js 15 project with shadcn/ui + Tailwind wired up.
+cd out && npm install && npm run dev
 ```
 
 ### Cross-adapter smoke test
@@ -146,8 +167,8 @@ kind and calls the override directly. Example: `adapter-compose` overrides
   need to be written; current stdlib placeholders will be updated.
 - Project-level `.glyph` source syntax (beyond compound definitions) is
   planned but not in v0.
-- `examples/` ships `landing` (web) and `landing-android` (compose); the
-  planned `dashboard`, `chat`, `commerce`, `settings` are TODO.
+- `examples/` ships `landing`, `dashboard`, `chat` (web) and `landing-android`
+  (compose). `commerce`, `settings` are still TODO.
 
 ## Branding rules
 

@@ -13,6 +13,14 @@ Flutter next week — without rewriting your app.
 
 ## Quickstart
 
+One command builds and runs an example:
+
+```bash
+./scripts/dev.sh landing      # or: dashboard, chat
+```
+
+Under the hood that's just:
+
 ```bash
 pnpm install
 pnpm -r build
@@ -23,7 +31,8 @@ node ../../packages/cli/dist/index.js build --out ./out
 cd out && npm install && npm run dev
 ```
 
-`out/` is a Next.js 15 project that renders a topbar + hero + feature grid.
+`out/` is a Next.js 15 project styled with **shadcn/ui + Tailwind CSS**,
+ready to deploy.
 
 ## Retarget the same app to Android
 
@@ -42,8 +51,10 @@ adapter: compose
 - **Core**: IR, validator, compound expander, adapter interface
 - **60 atoms** — irreducible UI and logic primitives
 - **34 stdlib compounds** — higher-level widgets (topbar, sidebar, card, …)
-- **4 adapters** — `next` (web), `compose` (Android), `tauri` (desktop),
-  `flutter` (cross-platform secondary)
+- **4 adapters** — `next` (web, shadcn/ui + Tailwind), `compose` (Android),
+  `tauri` (desktop), `flutter` (cross-platform secondary)
+- **4 example projects** — `landing`, `dashboard`, `chat` (web),
+  `landing-android` (Compose)
 
 ## Glyph Studio
 
