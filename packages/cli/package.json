@@ -1,0 +1,24 @@
+{
+  "name": "@cpl/cli",
+  "version": "0.0.0",
+  "type": "module",
+  "bin": {
+    "cpl": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@cpl/core": "workspace:*",
+    "@cpl/adapter-next": "workspace:*",
+    "@cpl/adapter-compose": "workspace:*",
+    "@cpl/adapter-tauri": "workspace:*",
+    "@cpl/adapter-flutter": "workspace:*",
+    "yaml": "^2.4.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "@types/node": "^20.12.0"
+  }
+}

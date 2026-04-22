@@ -1,0 +1,25 @@
+kind: field
+category: form
+docs: Labelled form control with optional helper text.
+props:
+  label: { type: string, required: true }
+  help: { type: string }
+body:
+  - kind: column
+    props:
+      gap: 4
+    children:
+      - kind: label
+        props:
+          value: "{{ props.label }}"
+      - kind: slot
+        props: {}
+      - kind: when
+        props:
+          cond: "{{ props.help }}"
+        children:
+          - kind: text
+            props:
+              value: "{{ props.help }}"
+              size: 12
+              color: "#6b7280"

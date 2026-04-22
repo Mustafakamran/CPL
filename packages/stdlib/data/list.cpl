@@ -1,0 +1,10 @@
+kind: list
+category: data-display
+docs: Vertical list container.
+body:
+  - kind: column
+    props:
+      gap: 0
+    children:
+      - kind: slot
+        props: {}

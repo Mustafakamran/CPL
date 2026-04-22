@@ -1,0 +1,20 @@
+kind: sidebar
+category: navigation
+docs: Vertical navigation rail on the side of a layout.
+props:
+  width: { type: any, default: 240 }
+body:
+  - kind: box
+    props:
+      width: "{{ props.width }}"
+      padding: 16
+      background: "#f9fafb"
+      border: "1px solid #e5e7eb"
+      height: "100vh"
+    children:
+      - kind: column
+        props:
+          gap: 8
+        children:
+          - kind: slot
+            props: {}

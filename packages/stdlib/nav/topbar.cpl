@@ -1,0 +1,37 @@
+kind: topbar
+category: navigation
+docs: Horizontal navigation bar across the top of a screen.
+props:
+  title: { type: string }
+body:
+  - kind: sticky
+    props:
+      edge: top
+    children:
+      - kind: box
+        props:
+          padding: "12px 20px"
+          background: "#ffffff"
+          border: "1px solid #e5e7eb"
+        children:
+          - kind: row
+            props:
+              gap: 16
+              align: center
+              justify: between
+            children:
+              - kind: when
+                props:
+                  cond: "{{ props.title }}"
+                children:
+                  - kind: heading
+                    props:
+                      value: "{{ props.title }}"
+                      level: "3"
+              - kind: row
+                props:
+                  gap: 12
+                  align: center
+                children:
+                  - kind: slot
+                    props: {}

@@ -1,0 +1,12 @@
+kind: form
+category: form
+docs: Form wrapper with vertically stacked fields and a submit area.
+props:
+  onSubmit: { type: expr }
+body:
+  - kind: column
+    props:
+      gap: 16
+    children:
+      - kind: slot
+        props: {}

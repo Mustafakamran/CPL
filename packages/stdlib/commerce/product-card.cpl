@@ -1,0 +1,44 @@
+kind: product-card
+category: commerce
+docs: Image, title, price, and action for a product.
+props:
+  image: { type: string, required: true }
+  title: { type: string, required: true }
+  price: { type: any, required: true }
+  currency: { type: string, default: "$" }
+body:
+  - kind: card
+    props:
+      padding: 0
+    children:
+      - kind: column
+        props:
+          gap: 0
+        children:
+          - kind: image
+            props:
+              src: "{{ props.image }}"
+              alt: "{{ props.title }}"
+              height: 160
+              fit: cover
+          - kind: box
+            props:
+              padding: 12
+            children:
+              - kind: column
+                props:
+                  gap: 6
+                children:
+                  - kind: text
+                    props:
+                      value: "{{ props.title }}"
+                      weight: "500"
+                  - kind: price
+                    props:
+                      amount: "{{ props.price }}"
+                      currency: "{{ props.currency }}"
+                  - kind: button
+                    props:
+                      label: "Add to cart"
+                      variant: primary
+                      size: sm

@@ -1,0 +1,29 @@
+kind: avatar
+category: ui
+docs: Circular user image with a fallback initial.
+props:
+  src: { type: string }
+  name: { type: string, required: true }
+  size: { type: any, default: 40 }
+body:
+  - kind: box
+    props:
+      width: "{{ props.size }}"
+      height: "{{ props.size }}"
+      radius: 999
+      background: "#e5e7eb"
+    children:
+      - kind: center
+        props: {}
+        children:
+          - kind: when
+            props:
+              cond: "{{ props.src }}"
+            children:
+              - kind: image
+                props:
+                  src: "{{ props.src }}"
+                  alt: "{{ props.name }}"
+                  fit: cover
+                  width: "{{ props.size }}"
+                  height: "{{ props.size }}"

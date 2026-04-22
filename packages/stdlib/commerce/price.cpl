@@ -1,0 +1,20 @@
+kind: price
+category: commerce
+docs: Formatted price with currency symbol.
+props:
+  amount: { type: any, required: true }
+  currency: { type: string, default: "$" }
+body:
+  - kind: row
+    props:
+      gap: 2
+      align: center
+    children:
+      - kind: text
+        props:
+          value: "{{ props.currency }}"
+          weight: "600"
+      - kind: text
+        props:
+          value: "{{ props.amount }}"
+          weight: "600"

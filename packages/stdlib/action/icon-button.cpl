@@ -1,0 +1,22 @@
+kind: icon-button
+category: action
+docs: Button with a single icon and no label.
+props:
+  icon: { type: string, required: true }
+  onClick: { type: expr }
+  size: { type: { kind: enum, values: [sm, md, lg] }, default: md }
+body:
+  - kind: pressable
+    props:
+      onPress: "{{ props.onClick }}"
+    children:
+      - kind: box
+        props:
+          padding: 8
+          radius: 6
+          background: "#f3f4f6"
+        children:
+          - kind: icon
+            props:
+              name: "{{ props.icon }}"
+              size: 18

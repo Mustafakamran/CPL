@@ -1,0 +1,23 @@
+kind: search-bar
+category: form
+docs: Search input with a leading icon.
+props:
+  placeholder: { type: string, default: "Search" }
+  value: { type: expr }
+  onChange: { type: expr }
+body:
+  - kind: row
+    props:
+      gap: 8
+      align: center
+    children:
+      - kind: icon
+        props:
+          name: search
+          size: 16
+      - kind: text-input
+        props:
+          kind: search
+          placeholder: "{{ props.placeholder }}"
+          value: "{{ props.value }}"
+          onChange: "{{ props.onChange }}"

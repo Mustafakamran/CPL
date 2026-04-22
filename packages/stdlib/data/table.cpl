@@ -1,0 +1,59 @@
+kind: table
+category: data-display
+docs: Data table with header row and body rows.
+props:
+  columns: { type: expr, required: true, docs: "[{key, label}]" }
+  rows: { type: expr, required: true }
+body:
+  - kind: box
+    props:
+      border: "1px solid #e5e7eb"
+      radius: 6
+    children:
+      - kind: column
+        props:
+          gap: 0
+        children:
+          - kind: row
+            props:
+              gap: 0
+            children:
+              - kind: repeat
+                props:
+                  source: "{{ props.columns }}"
+                  as: col
+                children:
+                  - kind: box
+                    props:
+                      padding: "10px 12px"
+                      background: "#f9fafb"
+                      border: "1px solid #e5e7eb"
+                    children:
+                      - kind: text
+                        props:
+                          value: "{{ col.label }}"
+                          weight: "600"
+                          size: 13
+          - kind: repeat
+            props:
+              source: "{{ props.rows }}"
+              as: row
+            children:
+              - kind: row
+                props:
+                  gap: 0
+                children:
+                  - kind: repeat
+                    props:
+                      source: "{{ props.columns }}"
+                      as: col
+                    children:
+                      - kind: box
+                        props:
+                          padding: "10px 12px"
+                          border: "1px solid #f3f4f6"
+                        children:
+                          - kind: text
+                            props:
+                              value: "{{ row[col.key] }}"
+                              size: 13

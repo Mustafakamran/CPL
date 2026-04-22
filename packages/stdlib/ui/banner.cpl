@@ -1,0 +1,15 @@
+kind: banner
+category: ui
+docs: Full-width page banner for announcements.
+props:
+  message: { type: string, required: true }
+body:
+  - kind: box
+    props:
+      padding: "10px 16px"
+      background: "#fef3c7"
+      border: "1px solid #fde68a"
+    children:
+      - kind: text
+        props:
+          value: "{{ props.message }}"

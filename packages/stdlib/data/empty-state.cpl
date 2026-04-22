@@ -1,0 +1,34 @@
+kind: empty-state
+category: data-display
+docs: Centered empty-data message with optional icon and action.
+props:
+  title: { type: string, required: true }
+  message: { type: string }
+  icon: { type: string, default: inbox }
+body:
+  - kind: center
+    props: {}
+    children:
+      - kind: column
+        props:
+          gap: 12
+          align: center
+        children:
+          - kind: icon
+            props:
+              name: "{{ props.icon }}"
+              size: 48
+              color: "#9ca3af"
+          - kind: heading
+            props:
+              value: "{{ props.title }}"
+              level: "3"
+          - kind: when
+            props:
+              cond: "{{ props.message }}"
+            children:
+              - kind: paragraph
+                props:
+                  value: "{{ props.message }}"
+          - kind: slot
+            props: {}

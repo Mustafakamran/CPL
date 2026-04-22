@@ -1,0 +1,12 @@
+kind: tooltip
+category: ui
+docs: Hover/focus popup with a short hint.
+props:
+  text: { type: string, required: true }
+body:
+  - kind: box
+    props:
+      padding: 0
+    children:
+      - kind: slot
+        props: {}

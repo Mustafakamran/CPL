@@ -1,0 +1,12 @@
+kind: nav-item
+category: navigation
+docs: Single navigation entry used in sidebar/bottombar.
+props:
+  label: { type: string, required: true }
+  href: { type: string, required: true }
+  active: { type: expr, default: false }
+body:
+  - kind: link
+    props:
+      href: "{{ props.href }}"
+      label: "{{ props.label }}"

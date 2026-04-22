@@ -1,0 +1,14 @@
+kind: tabs
+category: ui
+docs: Horizontal tab bar container; individual tabs are nested.
+props:
+  active: { type: expr }
+  onChange: { type: expr }
+body:
+  - kind: row
+    props:
+      gap: 4
+      align: end
+    children:
+      - kind: slot
+        props: {}

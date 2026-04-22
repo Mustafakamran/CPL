@@ -1,0 +1,35 @@
+kind: message-bubble
+category: social
+docs: Chat message bubble for one side of a conversation.
+props:
+  text: { type: string, required: true }
+  author: { type: string }
+  mine: { type: expr, default: false }
+body:
+  - kind: row
+    props:
+      gap: 8
+      justify: start
+    children:
+      - kind: box
+        props:
+          padding: "8px 12px"
+          radius: 12
+          background: "#e0e7ff"
+        children:
+          - kind: column
+            props:
+              gap: 2
+            children:
+              - kind: when
+                props:
+                  cond: "{{ props.author }}"
+                children:
+                  - kind: text
+                    props:
+                      value: "{{ props.author }}"
+                      size: 11
+                      weight: "600"
+              - kind: text
+                props:
+                  value: "{{ props.text }}"

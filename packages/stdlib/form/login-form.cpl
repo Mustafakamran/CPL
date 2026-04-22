@@ -1,0 +1,30 @@
+kind: login-form
+category: form
+docs: Email + password sign-in form with submit button.
+props:
+  onSubmit: { type: expr }
+body:
+  - kind: form
+    props:
+      onSubmit: "{{ props.onSubmit }}"
+    children:
+      - kind: field
+        props:
+          label: "Email"
+        children:
+          - kind: text-input
+            props:
+              kind: email
+              placeholder: "you@example.com"
+      - kind: field
+        props:
+          label: "Password"
+        children:
+          - kind: text-input
+            props:
+              kind: password
+      - kind: button
+        props:
+          label: "Sign in"
+          type: submit
+          variant: primary

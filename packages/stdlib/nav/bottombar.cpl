@@ -1,0 +1,22 @@
+kind: bottombar
+category: navigation
+docs: Mobile-style tab bar at the bottom of a screen.
+body:
+  - kind: sticky
+    props:
+      edge: bottom
+    children:
+      - kind: box
+        props:
+          padding: "8px 12px"
+          background: "#ffffff"
+          border: "1px solid #e5e7eb"
+        children:
+          - kind: row
+            props:
+              gap: 16
+              align: center
+              justify: around
+            children:
+              - kind: slot
+                props: {}

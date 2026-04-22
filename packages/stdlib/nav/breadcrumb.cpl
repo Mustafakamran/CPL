@@ -1,0 +1,20 @@
+kind: breadcrumb
+category: navigation
+docs: Path-style navigation trail.
+props:
+  items: { type: expr, required: true, docs: "[{label, href}]" }
+body:
+  - kind: row
+    props:
+      gap: 6
+      align: center
+    children:
+      - kind: repeat
+        props:
+          source: "{{ props.items }}"
+          as: item
+        children:
+          - kind: link
+            props:
+              href: "{{ item.href }}"
+              label: "{{ item.label }}"

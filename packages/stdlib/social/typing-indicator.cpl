@@ -1,0 +1,12 @@
+kind: typing-indicator
+category: social
+docs: Animated "user is typing..." hint.
+body:
+  - kind: row
+    props:
+      gap: 4
+    children:
+      - kind: text
+        props:
+          value: "…"
+          color: "#9ca3af"
