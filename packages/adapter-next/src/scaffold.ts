@@ -51,8 +51,8 @@ export function scaffoldFiles(opts: { name: string }): FileMap {
       2
     ) + "\n",
     "next.config.js": "module.exports = { reactStrictMode: true };\n",
-    "src/app/globals.css": `:root { color-scheme: light dark; }
-body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif; }
+    "src/app/globals.css": `:root { color-scheme: light; }
+body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif; color: #111; background: #fff; }
 * { box-sizing: border-box; }
 `,
     "src/app/layout.tsx": `import type { ReactNode } from "react";
