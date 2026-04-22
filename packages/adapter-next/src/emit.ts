@@ -121,10 +121,7 @@ const emitters: Record<string, Emit> = {
   },
   async divider(node) {
     const orientation = str(node.props.orientation, "horizontal");
-    const style = orientation === "horizontal"
-      ? `borderTop: "1px solid #e5e7eb", width: "100%", height: 0`
-      : `borderLeft: "1px solid #e5e7eb", height: "100%", width: 0`;
-    return `<div style={{ ${style} }} />`;
+    return `<Separator orientation="${orientation}" />`;
   },
   async "scroll-view"(node, ctx) {
     const axis = str(node.props.axis, "vertical");
@@ -160,30 +157,38 @@ const emitters: Record<string, Emit> = {
     if (node.props.weight) style.push(`fontWeight: ${JSON.stringify(String(node.props.weight))}`);
     if (node.props.size) style.push(`fontSize: ${JSON.stringify(cssSize(node.props.size))}`);
     if (node.props.color) style.push(`color: ${JSON.stringify(String(node.props.color))}`);
-    return `<span${style.length ? ` style={{ ${style.join(", ")} }}` : ""}>${content}</span>`;
+    return `<span className="text-sm text-foreground"${style.length ? ` style={{ ${style.join(", ")} }}` : ""}>${content}</span>`;
   },
   async heading(node) {
     const level = str(node.props.level, "1");
     const value = str(node.props.value);
     const expr = maybeExpr(node.props.value);
     const content = expr ? `{${expr}}` : escape(value);
-    return `<h${level}>${content}</h${level}>`;
+    const sizeClass = level === "1" ? "text-4xl font-bold tracking-tight"
+      : level === "2" ? "text-3xl font-semibold tracking-tight"
+      : level === "3" ? "text-2xl font-semibold tracking-tight"
+      : level === "4" ? "text-xl font-semibold"
+      : level === "5" ? "text-lg font-semibold"
+      : "text-base font-semibold";
+    return `<h${level} className="${sizeClass}">${content}</h${level}>`;
   },
   async paragraph(node) {
     const expr = maybeExpr(node.props.value);
-    return `<p>${expr ? `{${expr}}` : escape(str(node.props.value))}</p>`;
+    return `<p className="leading-7 text-muted-foreground">${expr ? `{${expr}}` : escape(str(node.props.value))}</p>`;
   },
   async label(node) {
     const forAttr = node.props.for ? ` htmlFor="${escapeAttr(str(node.props.for))}"` : "";
     const expr = maybeExpr(node.props.value);
-    return `<label${forAttr}>${expr ? `{${expr}}` : escape(str(node.props.value))}</label>`;
+    return `<Label${forAttr}>${expr ? `{${expr}}` : escape(str(node.props.value))}</Label>`;
   },
   async code(node) {
     const isBlock = !!node.props.block;
     const value = str(node.props.value);
     const expr = maybeExpr(node.props.value);
     const content = expr ? `{${expr}}` : escape(value);
-    return isBlock ? `<pre><code>${content}</code></pre>` : `<code>${content}</code>`;
+    return isBlock
+      ? `<pre className="rounded-md bg-muted p-4 overflow-x-auto"><code className="text-sm font-mono">${content}</code></pre>`
+      : `<code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">${content}</code>`;
   },
   async markdown(node) {
     const expr = maybeExpr(node.props.value);
@@ -246,26 +251,26 @@ const emitters: Record<string, Emit> = {
 
   // ──────────── INPUT ────────────
   async "text-input"(node) {
-    return inputEl(node, str(node.props.kind, "text"));
+    return shadcnInput(node, str(node.props.kind, "text"));
   },
   async "number-input"(node) {
     const extra: string[] = [];
     if (node.props.min !== undefined) extra.push(`min={${num(node.props.min)}}`);
     if (node.props.max !== undefined) extra.push(`max={${num(node.props.max)}}`);
     if (node.props.step !== undefined) extra.push(`step={${num(node.props.step)}}`);
-    return inputEl(node, "number", extra.join(" "));
+    return shadcnInput(node, "number", extra.join(" "));
   },
   async checkbox(node) {
-    return `<input type="checkbox"${valueExpr(node.props.checked, "checked")}${eventExpr(node.props.onChange, "onChange")}${node.props.disabled ? " disabled" : ""} />`;
+    return `<input type="checkbox" className="h-4 w-4 rounded border-input"${valueExpr(node.props.checked, "checked")}${eventExpr(node.props.onChange, "onChange")}${node.props.disabled ? " disabled" : ""} />`;
   },
   async radio(node) {
-    return `<input type="radio" name="${escapeAttr(str(node.props.name))}" value="${escapeAttr(str(node.props.value))}"${valueExpr(node.props.checked, "checked")}${eventExpr(node.props.onChange, "onChange")} />`;
+    return `<input type="radio" className="h-4 w-4 border-input" name="${escapeAttr(str(node.props.name))}" value="${escapeAttr(str(node.props.value))}"${valueExpr(node.props.checked, "checked")}${eventExpr(node.props.onChange, "onChange")} />`;
   },
   async switch(node) {
-    return `<input type="checkbox" role="switch"${valueExpr(node.props.value, "checked")}${eventExpr(node.props.onChange, "onChange")}${node.props.disabled ? " disabled" : ""} />`;
+    return `<input type="checkbox" role="switch" className="h-4 w-8 rounded-full border-input"${valueExpr(node.props.value, "checked")}${eventExpr(node.props.onChange, "onChange")}${node.props.disabled ? " disabled" : ""} />`;
   },
   async slider(node) {
-    return `<input type="range"${valueExpr(node.props.value, "value")} min={${num(node.props.min, 0)}} max={${num(node.props.max, 100)}} step={${num(node.props.step, 1)}}${eventExpr(node.props.onChange, "onChange")} />`;
+    return `<input type="range" className="w-full accent-primary"${valueExpr(node.props.value, "value")} min={${num(node.props.min, 0)}} max={${num(node.props.max, 100)}} step={${num(node.props.step, 1)}}${eventExpr(node.props.onChange, "onChange")} />`;
   },
   async select(node) {
     const optionsExpr = maybeExpr(node.props.options);
@@ -273,25 +278,25 @@ const emitters: Record<string, Emit> = {
     const val = valueExpr(node.props.value, "value");
     const onCh = eventExpr(node.props.onChange, "onChange");
     const placeholder = node.props.placeholder ? `<option value="" disabled>${escape(str(node.props.placeholder))}</option>` : "";
-    return `<select${val}${onCh}>${placeholder}{(${optionsJS}).map((o: any) => <option key={o.value} value={o.value}>{o.label}</option>)}</select>`;
+    return `<select className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"${val}${onCh}>${placeholder}{(${optionsJS}).map((o: any) => <option key={o.value} value={o.value}>{o.label}</option>)}</select>`;
   },
   async textarea(node) {
     const rows = num(node.props.rows, 3);
-    return `<textarea rows={${rows}}${valueExpr(node.props.value, "value")}${eventExpr(node.props.onChange, "onChange")}${node.props.placeholder ? ` placeholder=${JSON.stringify(str(node.props.placeholder))}` : ""}${node.props.disabled ? " disabled" : ""} />`;
+    return `<Textarea rows={${rows}}${valueExpr(node.props.value, "value")}${eventExpr(node.props.onChange, "onChange")}${node.props.placeholder ? ` placeholder=${JSON.stringify(str(node.props.placeholder))}` : ""}${node.props.disabled ? " disabled" : ""} />`;
   },
   async "file-input"(node) {
     const accept = node.props.accept ? ` accept=${JSON.stringify(str(node.props.accept))}` : "";
     const mult = node.props.multiple ? " multiple" : "";
-    return `<input type="file"${accept}${mult}${eventExpr(node.props.onChange, "onChange")} />`;
+    return `<Input type="file"${accept}${mult}${eventExpr(node.props.onChange, "onChange")} />`;
   },
   async "date-input"(node) {
-    return `<input type="date"${valueExpr(node.props.value, "value")}${eventExpr(node.props.onChange, "onChange")}${node.props.min ? ` min=${JSON.stringify(str(node.props.min))}` : ""}${node.props.max ? ` max=${JSON.stringify(str(node.props.max))}` : ""} />`;
+    return `<Input type="date"${valueExpr(node.props.value, "value")}${eventExpr(node.props.onChange, "onChange")}${node.props.min ? ` min=${JSON.stringify(str(node.props.min))}` : ""}${node.props.max ? ` max=${JSON.stringify(str(node.props.max))}` : ""} />`;
   },
   async "color-input"(node) {
-    return `<input type="color"${valueExpr(node.props.value, "value")}${eventExpr(node.props.onChange, "onChange")} />`;
+    return `<Input type="color" className="h-9 w-16 p-1"${valueExpr(node.props.value, "value")}${eventExpr(node.props.onChange, "onChange")} />`;
   },
   async "range-input"(node) {
-    return `<div style={{ display: "flex", gap: 8 }}><input type="range"${valueExpr(node.props.valueLow, "value")} min={${num(node.props.min, 0)}} max={${num(node.props.max, 100)}} step={${num(node.props.step, 1)}}${eventExpr(node.props.onChange, "onChange")} /><input type="range"${valueExpr(node.props.valueHigh, "value")} min={${num(node.props.min, 0)}} max={${num(node.props.max, 100)}} step={${num(node.props.step, 1)}}${eventExpr(node.props.onChange, "onChange")} /></div>`;
+    return `<div className="flex gap-2"><input type="range" className="w-full accent-primary"${valueExpr(node.props.valueLow, "value")} min={${num(node.props.min, 0)}} max={${num(node.props.max, 100)}} step={${num(node.props.step, 1)}}${eventExpr(node.props.onChange, "onChange")} /><input type="range" className="w-full accent-primary"${valueExpr(node.props.valueHigh, "value")} min={${num(node.props.min, 0)}} max={${num(node.props.max, 100)}} step={${num(node.props.step, 1)}}${eventExpr(node.props.onChange, "onChange")} /></div>`;
   },
 
   // ──────────── ACTION ────────────
@@ -300,17 +305,16 @@ const emitters: Record<string, Emit> = {
     const onClick = eventExpr(node.props.onClick, "onClick");
     const disabled = node.props.disabled ? " disabled" : "";
     const type = ` type="${str(node.props.type, "button")}"`;
-    const variant = str(node.props.variant, "primary");
-    const size = str(node.props.size, "md");
-    const style = buttonStyle(variant, size);
+    const variant = str(node.props.variant, "default");
+    const size = str(node.props.size, "default");
     const inner = label || (await children(ctx, node));
-    return `<button${type}${onClick}${disabled} style={{${style}}}>${inner}</button>`;
+    return `<Button${type}${onClick}${disabled} variant="${variant}" size="${size}">${inner}</Button>`;
   },
   async link(node, ctx) {
     const href = escapeAttr(str(node.props.href));
     const label = node.props.label ? escape(str(node.props.label)) : await children(ctx, node);
     const ext = node.props.external ? ` target="_blank" rel="noopener noreferrer"` : "";
-    return `<a href="${href}"${ext}>${label}</a>`;
+    return `<a href="${href}" className="text-primary underline-offset-4 hover:underline"${ext}>${label}</a>`;
   },
 
   // ──────────── STRUCTURAL ────────────
@@ -444,24 +448,13 @@ function eventExpr(v: PropValue, attr: string): string {
   return "";
 }
 
-function inputEl(node: IRNode, type: string, extra = ""): string {
+function shadcnInput(node: IRNode, type: string, extra = ""): string {
   const val = valueExpr(node.props.value, "value");
   const onCh = eventExpr(node.props.onChange, "onChange");
   const placeholder = node.props.placeholder ? ` placeholder=${JSON.stringify(str(node.props.placeholder))}` : "";
   const disabled = node.props.disabled ? " disabled" : "";
   const name = node.props.name ? ` name=${JSON.stringify(str(node.props.name))}` : "";
-  return `<input type=${JSON.stringify(type)}${val}${onCh}${placeholder}${disabled}${name}${extra ? " " + extra : ""} />`;
-}
-
-function buttonStyle(variant: string, size: string): string {
-  const sizes: Record<string, string> = { sm: "6px 10px", md: "8px 14px", lg: "12px 18px" };
-  const variants: Record<string, string> = {
-    primary: `background: "#2563eb", color: "#fff", border: "1px solid #2563eb"`,
-    secondary: `background: "#f3f4f6", color: "#111", border: "1px solid #d1d5db"`,
-    ghost: `background: "transparent", color: "#111", border: "1px solid transparent"`,
-    danger: `background: "#dc2626", color: "#fff", border: "1px solid #dc2626"`,
-  };
-  return `padding: ${JSON.stringify(sizes[size] ?? sizes.md)}, borderRadius: 6, cursor: "pointer", ${variants[variant] ?? variants.primary}`;
+  return `<Input type=${JSON.stringify(type)}${val}${onCh}${placeholder}${disabled}${name}${extra ? " " + extra : ""} />`;
 }
 
 function renderIconSymbol(name: string): string {
