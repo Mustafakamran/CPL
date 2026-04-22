@@ -1,0 +1,32 @@
+kind: pagination
+category: navigation
+docs: Page-number controls for paginated lists.
+props:
+  page: { type: expr, required: true }
+  totalPages: { type: expr, required: true }
+  onChange: { type: expr }
+body:
+  - kind: row
+    props:
+      gap: 8
+      align: center
+    children:
+      - kind: button
+        props:
+          label: "Prev"
+          variant: secondary
+          size: sm
+      - kind: text
+        props:
+          value: "{{ props.page }}"
+      - kind: text
+        props:
+          value: " / "
+      - kind: text
+        props:
+          value: "{{ props.totalPages }}"
+      - kind: button
+        props:
+          label: "Next"
+          variant: secondary
+          size: sm

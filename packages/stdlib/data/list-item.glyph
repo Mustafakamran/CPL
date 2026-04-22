@@ -1,0 +1,29 @@
+kind: list-item
+category: data-display
+docs: Single row in a list, with optional leading and trailing elements.
+props:
+  title: { type: string, required: true }
+  subtitle: { type: string }
+body:
+  - kind: box
+    props:
+      padding: "10px 12px"
+      border: "1px solid #f3f4f6"
+    children:
+      - kind: column
+        props:
+          gap: 2
+        children:
+          - kind: text
+            props:
+              value: "{{ props.title }}"
+              weight: "500"
+          - kind: when
+            props:
+              cond: "{{ props.subtitle }}"
+            children:
+              - kind: text
+                props:
+                  value: "{{ props.subtitle }}"
+                  size: 12
+                  color: "#6b7280"

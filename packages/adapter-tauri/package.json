@@ -1,0 +1,11 @@
+{
+  "name": "@glyph/adapter-tauri",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "import": "./dist/index.js", "types": "./dist/index.d.ts" } },
+  "scripts": { "build": "tsc -p tsconfig.json", "test": "vitest run" },
+  "dependencies": { "@glyph/core": "workspace:*", "@glyph/adapter-next": "workspace:*" },
+  "devDependencies": { "typescript": "^5.5.0" }
+}

@@ -1,0 +1,14 @@
+kind: skeleton
+category: ui
+docs: Placeholder shimmer for loading content.
+props:
+  width: { type: any, default: "100%" }
+  height: { type: any, default: 16 }
+  radius: { type: any, default: 4 }
+body:
+  - kind: box
+    props:
+      background: "#e5e7eb"
+      width: "{{ props.width }}"
+      height: "{{ props.height }}"
+      radius: "{{ props.radius }}"

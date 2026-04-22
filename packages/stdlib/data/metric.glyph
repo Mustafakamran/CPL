@@ -1,0 +1,33 @@
+kind: metric
+category: data-viz
+docs: Big-number KPI tile with optional label and trend.
+props:
+  label: { type: string, required: true }
+  value: { type: any, required: true }
+  trend: { type: string }
+body:
+  - kind: card
+    props: {}
+    children:
+      - kind: column
+        props:
+          gap: 6
+        children:
+          - kind: text
+            props:
+              value: "{{ props.label }}"
+              size: 12
+              color: "#6b7280"
+          - kind: heading
+            props:
+              value: "{{ props.value }}"
+              level: "2"
+          - kind: when
+            props:
+              cond: "{{ props.trend }}"
+            children:
+              - kind: text
+                props:
+                  value: "{{ props.trend }}"
+                  size: 12
+                  color: "#10b981"

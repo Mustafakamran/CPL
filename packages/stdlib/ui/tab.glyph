@@ -1,0 +1,21 @@
+kind: tab
+category: ui
+docs: Single selectable tab header.
+props:
+  label: { type: string, required: true }
+  active: { type: expr, default: false }
+  onClick: { type: expr }
+body:
+  - kind: pressable
+    props:
+      onPress: "{{ props.onClick }}"
+    children:
+      - kind: box
+        props:
+          padding: "8px 14px"
+          radius: 6
+        children:
+          - kind: text
+            props:
+              value: "{{ props.label }}"
+              weight: "500"

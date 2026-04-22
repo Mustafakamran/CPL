@@ -1,0 +1,23 @@
+kind: floating-action-button
+category: action
+docs: Circular button that floats above content; adapters may override with native FAB.
+props:
+  label: { type: string, default: "Add" }
+  onClick: { type: expr }
+body:
+  - kind: pressable
+    props:
+      onPress: "{{ props.onClick }}"
+    children:
+      - kind: box
+        props:
+          padding: 16
+          radius: 999
+          background: "#2563eb"
+        children:
+          - kind: text
+            props:
+              value: "+"
+              color: "#ffffff"
+              size: 20
+              weight: "700"

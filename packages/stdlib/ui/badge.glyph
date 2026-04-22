@@ -1,0 +1,17 @@
+kind: badge
+category: ui
+docs: Small pill label used for counts or statuses.
+props:
+  label: { type: string, required: true }
+  variant: { type: { kind: enum, values: [neutral, success, warning, danger] }, default: neutral }
+body:
+  - kind: box
+    props:
+      padding: "2px 8px"
+      radius: 999
+      background: "#f3f4f6"
+    children:
+      - kind: text
+        props:
+          value: "{{ props.label }}"
+          size: 12

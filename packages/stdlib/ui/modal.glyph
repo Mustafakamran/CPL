@@ -1,0 +1,43 @@
+kind: modal
+category: ui
+docs: Centered overlay dialog with backdrop.
+props:
+  open: { type: expr, required: true }
+  title: { type: string }
+body:
+  - kind: when
+    props:
+      cond: "{{ props.open }}"
+    children:
+      - kind: portal
+        props: {}
+        children:
+          - kind: box
+            props:
+              background: "rgba(0,0,0,0.4)"
+              padding: 24
+            children:
+              - kind: center
+                props: {}
+                children:
+                  - kind: box
+                    props:
+                      background: "#fff"
+                      padding: 24
+                      radius: 8
+                      width: 480
+                    children:
+                      - kind: column
+                        props:
+                          gap: 12
+                        children:
+                          - kind: when
+                            props:
+                              cond: "{{ props.title }}"
+                            children:
+                              - kind: heading
+                                props:
+                                  value: "{{ props.title }}"
+                                  level: "3"
+                          - kind: slot
+                            props: {}

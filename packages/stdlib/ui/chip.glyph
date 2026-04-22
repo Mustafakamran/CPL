@@ -1,0 +1,22 @@
+kind: chip
+category: ui
+docs: Dismissable pill, used for filters, tags, selections.
+props:
+  label: { type: string, required: true }
+  onRemove: { type: expr }
+body:
+  - kind: row
+    props:
+      gap: 6
+      align: center
+    children:
+      - kind: box
+        props:
+          padding: "4px 10px"
+          radius: 999
+          background: "#e0e7ff"
+        children:
+          - kind: text
+            props:
+              value: "{{ props.label }}"
+              size: 13

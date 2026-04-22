@@ -1,0 +1,13 @@
+kind: progress
+category: data-viz
+docs: Linear progress bar (0-100).
+props:
+  value: { type: expr, required: true }
+  max: { type: number, default: 100 }
+body:
+  - kind: box
+    props:
+      width: "100%"
+      height: 8
+      background: "#e5e7eb"
+      radius: 999

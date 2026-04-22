@@ -1,0 +1,104 @@
+target: android
+adapter: compose
+project:
+  name: landing
+nodes:
+  - kind: app
+    props: {}
+    children:
+      - kind: page
+        props:
+          title: Welcome
+        children:
+          - kind: topbar
+            props:
+              title: Glyph Demo
+            children:
+              - kind: link
+                props:
+                  href: "/about"
+                  label: "About"
+              - kind: button
+                props:
+                  label: "Sign in"
+                  variant: secondary
+                  size: sm
+          - kind: box
+            props:
+              padding: "64px 24px"
+            children:
+              - kind: column
+                props:
+                  gap: 24
+                  align: center
+                children:
+                  - kind: heading
+                    props:
+                      value: "Glyph"
+                      level: "1"
+                  - kind: paragraph
+                    props:
+                      value: "A cross-platform language whose vocabulary is everyday English."
+                  - kind: row
+                    props:
+                      gap: 12
+                    children:
+                      - kind: button
+                        props:
+                          label: "Get started"
+                          variant: primary
+                      - kind: button
+                        props:
+                          label: "Read the docs"
+                          variant: secondary
+          - kind: box
+            props:
+              padding: "32px 24px"
+            children:
+              - kind: grid
+                props:
+                  columns: 3
+                  gap: 16
+                children:
+                  - kind: card
+                    props: {}
+                    children:
+                      - kind: column
+                        props:
+                          gap: 8
+                        children:
+                          - kind: heading
+                            props:
+                              value: "Atoms"
+                              level: "3"
+                          - kind: paragraph
+                            props:
+                              value: "60 irreducible primitives implemented per adapter."
+                  - kind: card
+                    props: {}
+                    children:
+                      - kind: column
+                        props:
+                          gap: 8
+                        children:
+                          - kind: heading
+                            props:
+                              value: "Compounds"
+                              level: "3"
+                          - kind: paragraph
+                            props:
+                              value: "Composed in Glyph itself; cross-platform for free."
+                  - kind: card
+                    props: {}
+                    children:
+                      - kind: column
+                        props:
+                          gap: 8
+                        children:
+                          - kind: heading
+                            props:
+                              value: "Any framework"
+                              level: "3"
+                          - kind: paragraph
+                            props:
+                              value: "Adapters translate to Next.js, Compose, Flutter, and more."
