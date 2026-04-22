@@ -206,10 +206,10 @@ const emitters: Record<string, Emit> = {
     return `<img src="${escapeAttr(src)}" alt="${alt}" style={{ objectFit: ${JSON.stringify(fit)} }}${w}${h} />`;
   },
   async icon(node) {
-    const name = str(node.props.name);
+    const name = lucideIconName(str(node.props.name));
     const size = num(node.props.size, 20);
-    const color = node.props.color ? ` color: ${JSON.stringify(String(node.props.color))}` : "";
-    return `<span aria-label="${escapeAttr(name)}" style={{ display: "inline-block", width: ${size}, height: ${size}, ${color} }}>${renderIconSymbol(name)}</span>`;
+    const color = node.props.color ? ` color=${JSON.stringify(String(node.props.color))}` : "";
+    return `{(() => { const __I = (require("lucide-react") as any)[${JSON.stringify(name)}] ?? (require("lucide-react") as any).Square; return <__I size={${size}}${color} aria-label="${escapeAttr(str(node.props.name))}" />; })()}`;
   },
   async video(node) {
     const attrs = [
@@ -261,24 +261,39 @@ const emitters: Record<string, Emit> = {
     return shadcnInput(node, "number", extra.join(" "));
   },
   async checkbox(node) {
-    return `<input type="checkbox" className="h-4 w-4 rounded border-input"${valueExpr(node.props.checked, "checked")}${eventExpr(node.props.onChange, "onChange")}${node.props.disabled ? " disabled" : ""} />`;
+    const checked = valueExpr(node.props.checked, "checked");
+    const onCheck = node.props.onChange !== undefined
+      ? ` onCheckedChange={(v) => { ${maybeExpr(node.props.onChange) ?? ""}; }}`
+      : "";
+    return `<Checkbox${checked}${onCheck}${node.props.disabled ? " disabled" : ""} />`;
   },
   async radio(node) {
     return `<input type="radio" className="h-4 w-4 border-input" name="${escapeAttr(str(node.props.name))}" value="${escapeAttr(str(node.props.value))}"${valueExpr(node.props.checked, "checked")}${eventExpr(node.props.onChange, "onChange")} />`;
   },
   async switch(node) {
-    return `<input type="checkbox" role="switch" className="h-4 w-8 rounded-full border-input"${valueExpr(node.props.value, "checked")}${eventExpr(node.props.onChange, "onChange")}${node.props.disabled ? " disabled" : ""} />`;
+    const checked = valueExpr(node.props.value, "checked");
+    const onCheck = node.props.onChange !== undefined
+      ? ` onCheckedChange={(v) => { ${maybeExpr(node.props.onChange) ?? ""}; }}`
+      : "";
+    return `<Switch${checked}${onCheck}${node.props.disabled ? " disabled" : ""} />`;
   },
   async slider(node) {
-    return `<input type="range" className="w-full accent-primary"${valueExpr(node.props.value, "value")} min={${num(node.props.min, 0)}} max={${num(node.props.max, 100)}} step={${num(node.props.step, 1)}}${eventExpr(node.props.onChange, "onChange")} />`;
+    const valRaw = maybeExpr(node.props.value);
+    const valueAttr = valRaw ? ` value={[${valRaw}]}` : node.props.value !== undefined ? ` value={[${JSON.stringify(node.props.value)}]}` : "";
+    const onChange = node.props.onChange !== undefined
+      ? ` onValueChange={(v) => { ${maybeExpr(node.props.onChange) ?? ""}; }}`
+      : "";
+    return `<Slider${valueAttr} min={${num(node.props.min, 0)}} max={${num(node.props.max, 100)}} step={${num(node.props.step, 1)}}${onChange} />`;
   },
   async select(node) {
     const optionsExpr = maybeExpr(node.props.options);
     const optionsJS = optionsExpr ?? JSON.stringify(node.props.options ?? []);
     const val = valueExpr(node.props.value, "value");
-    const onCh = eventExpr(node.props.onChange, "onChange");
-    const placeholder = node.props.placeholder ? `<option value="" disabled>${escape(str(node.props.placeholder))}</option>` : "";
-    return `<select className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"${val}${onCh}>${placeholder}{(${optionsJS}).map((o: any) => <option key={o.value} value={o.value}>{o.label}</option>)}</select>`;
+    const onCh = node.props.onChange !== undefined
+      ? ` onValueChange={(v) => { ${maybeExpr(node.props.onChange) ?? ""}; }}`
+      : "";
+    const placeholder = escape(str(node.props.placeholder, "Select..."));
+    return `<Select${val}${onCh}><SelectTrigger><SelectValue placeholder="${placeholder}" /></SelectTrigger><SelectContent>{(${optionsJS}).map((o: any) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent></Select>`;
   },
   async textarea(node) {
     const rows = num(node.props.rows, 3);
@@ -457,8 +472,13 @@ function shadcnInput(node: IRNode, type: string, extra = ""): string {
   return `<Input type=${JSON.stringify(type)}${val}${onCh}${placeholder}${disabled}${name}${extra ? " " + extra : ""} />`;
 }
 
-function renderIconSymbol(name: string): string {
-  return `<span style={{ fontSize: "inherit" }}>◇</span>`;
+function lucideIconName(name: string): string {
+  // Map kebab-case icon name to PascalCase lucide export (e.g., "arrow-right" → "ArrowRight")
+  return name
+    .split("-")
+    .filter(Boolean)
+    .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
+    .join("");
 }
 
 export const emit: Emitter = async (node, ctx) => {

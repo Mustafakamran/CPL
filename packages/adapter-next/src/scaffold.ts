@@ -11,6 +11,19 @@ import {
   SHADCN_SKELETON,
   SHADCN_ALERT,
   SHADCN_AVATAR,
+  SHADCN_CHECKBOX,
+  SHADCN_SWITCH,
+  SHADCN_SLIDER,
+  SHADCN_PROGRESS,
+  SHADCN_RADIO_GROUP,
+  SHADCN_SELECT,
+  SHADCN_DIALOG,
+  SHADCN_TABS,
+  SHADCN_TOOLTIP,
+  SHADCN_POPOVER,
+  SHADCN_DROPDOWN_MENU,
+  SHADCN_ACCORDION,
+  SHADCN_SONNER,
   TAILWIND_CONFIG,
   POSTCSS_CONFIG,
   COMPONENTS_JSON,
@@ -34,7 +47,21 @@ export function scaffoldFiles(opts: { name: string }): FileMap {
       "class-variance-authority": "^0.7.0",
       clsx: "^2.1.1",
       "tailwind-merge": "^2.5.0",
+      "tailwindcss-animate": "^1.0.7",
       "lucide-react": "^0.454.0",
+      sonner: "^1.5.0",
+      "@radix-ui/react-accordion": "^1.2.0",
+      "@radix-ui/react-checkbox": "^1.1.0",
+      "@radix-ui/react-dialog": "^1.1.0",
+      "@radix-ui/react-dropdown-menu": "^2.1.0",
+      "@radix-ui/react-popover": "^1.1.0",
+      "@radix-ui/react-progress": "^1.1.0",
+      "@radix-ui/react-radio-group": "^1.2.0",
+      "@radix-ui/react-select": "^2.1.0",
+      "@radix-ui/react-slider": "^1.2.0",
+      "@radix-ui/react-switch": "^1.1.0",
+      "@radix-ui/react-tabs": "^1.1.0",
+      "@radix-ui/react-tooltip": "^1.1.0",
     },
     devDependencies: {
       typescript: "^5.5.0",
@@ -78,13 +105,18 @@ export function scaffoldFiles(opts: { name: string }): FileMap {
     "src/app/globals.css": GLOBALS_CSS,
     "src/app/layout.tsx": `import type { ReactNode } from "react";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const metadata = { title: ${JSON.stringify(opts.name)} };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>{children}</body>
+      <body>
+        <TooltipProvider>{children}</TooltipProvider>
+        <Toaster />
+      </body>
     </html>
   );
 }
@@ -101,6 +133,19 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Switch } from "@/components/ui/switch";
+import { Slider } from "@/components/ui/slider";
+import { Progress } from "@/components/ui/progress";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { toast } from "sonner";
 
 export default function Page() {
   return (
@@ -120,6 +165,19 @@ export default function Page() {
     "src/components/ui/skeleton.tsx": SHADCN_SKELETON,
     "src/components/ui/alert.tsx": SHADCN_ALERT,
     "src/components/ui/avatar.tsx": SHADCN_AVATAR,
+    "src/components/ui/checkbox.tsx": SHADCN_CHECKBOX,
+    "src/components/ui/switch.tsx": SHADCN_SWITCH,
+    "src/components/ui/slider.tsx": SHADCN_SLIDER,
+    "src/components/ui/progress.tsx": SHADCN_PROGRESS,
+    "src/components/ui/radio-group.tsx": SHADCN_RADIO_GROUP,
+    "src/components/ui/select.tsx": SHADCN_SELECT,
+    "src/components/ui/dialog.tsx": SHADCN_DIALOG,
+    "src/components/ui/tabs.tsx": SHADCN_TABS,
+    "src/components/ui/tooltip.tsx": SHADCN_TOOLTIP,
+    "src/components/ui/popover.tsx": SHADCN_POPOVER,
+    "src/components/ui/dropdown-menu.tsx": SHADCN_DROPDOWN_MENU,
+    "src/components/ui/accordion.tsx": SHADCN_ACCORDION,
+    "src/components/ui/sonner.tsx": SHADCN_SONNER,
     "src/glyph-runtime.tsx": `"use client";
 import { useEffect, useRef } from "react";
 

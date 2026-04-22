@@ -75,6 +75,67 @@ const COMPOUND_OVERRIDES: Record<string, Emitter> = {
     const image = src ? `<AvatarImage src="${escapeAttr(s(src))}" alt="${escapeAttr(name)}" />` : "";
     return { files: {}, snippet: `<Avatar ${sizeStyle}>${image}<AvatarFallback>${escape(initial)}</AvatarFallback></Avatar>` };
   },
+
+  async modal(node, ctx) {
+    const open = maybeExpr(node.props.open) ?? "false";
+    const title = node.props.title
+      ? `<DialogHeader><DialogTitle>${propContent(node.props.title)}</DialogTitle></DialogHeader>`
+      : "";
+    const inner = await ctx.emitChildren(node.children);
+    return {
+      files: {},
+      snippet: `<Dialog open={${open}}><DialogContent>${title}${inner}</DialogContent></Dialog>`,
+    };
+  },
+
+  async tabs(node, ctx) {
+    const active = maybeExpr(node.props.active);
+    const valueAttr = active ? ` value={${active}}` : "";
+    const onChange = maybeExpr(node.props.onChange);
+    const onValueChange = onChange ? ` onValueChange={(v) => { ${onChange}; }}` : "";
+    const inner = await ctx.emitChildren(node.children);
+    return {
+      files: {},
+      snippet: `<Tabs${valueAttr}${onValueChange}><TabsList>${inner}</TabsList></Tabs>`,
+    };
+  },
+
+  async tab(node) {
+    const label = s(node.props.label);
+    return {
+      files: {},
+      snippet: `<TabsTrigger value="${escapeAttr(label)}">${escape(label)}</TabsTrigger>`,
+    };
+  },
+
+  async tooltip(node, ctx) {
+    const text = propContent(node.props.text);
+    const inner = await ctx.emitChildren(node.children);
+    return {
+      files: {},
+      snippet: `<Tooltip><TooltipTrigger asChild>${inner || "<span />"}</TooltipTrigger><TooltipContent>${text}</TooltipContent></Tooltip>`,
+    };
+  },
+
+  async accordion(node, ctx) {
+    const title = propContent(node.props.title);
+    const inner = await ctx.emitChildren(node.children);
+    const id = ctx.unique("acc");
+    return {
+      files: {},
+      snippet: `<Accordion type="single" collapsible><AccordionItem value="${id}"><AccordionTrigger>${title}</AccordionTrigger><AccordionContent>${inner}</AccordionContent></AccordionItem></Accordion>`,
+    };
+  },
+
+  async progress(node) {
+    const value = maybeExpr(node.props.value) ?? String(node.props.value ?? 0);
+    const max = typeof node.props.max === "number" ? node.props.max : 100;
+    const pct = max === 100 ? value : `((${value}) * 100 / ${max})`;
+    return {
+      files: {},
+      snippet: `<Progress value={${pct}} />`,
+    };
+  },
 };
 
 const nextAdapter: Adapter = {
