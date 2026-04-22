@@ -1,5 +1,5 @@
 {
-  "name": "@cpl/core",
+  "name": "@glyph/core",
   "version": "0.0.0",
   "type": "module",
   "main": "./dist/index.js",

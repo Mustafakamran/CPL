@@ -1,8 +1,8 @@
-import type { Adapter } from "@cpl/core";
-import nextAdapter from "@cpl/adapter-next";
-import composeAdapter from "@cpl/adapter-compose";
-import tauriAdapter from "@cpl/adapter-tauri";
-import flutterAdapter from "@cpl/adapter-flutter";
+import type { Adapter } from "@glyph/core";
+import nextAdapter from "@glyph/adapter-next";
+import composeAdapter from "@glyph/adapter-compose";
+import tauriAdapter from "@glyph/adapter-tauri";
+import flutterAdapter from "@glyph/adapter-flutter";
 
 export const BUILTIN_ADAPTERS: Adapter[] = [
   nextAdapter,

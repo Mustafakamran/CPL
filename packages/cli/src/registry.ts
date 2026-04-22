@@ -1,6 +1,6 @@
 import { resolve } from "node:path";
 import { existsSync } from "node:fs";
-import { buildRegistry, loadAtoms, Registry } from "@cpl/core";
+import { buildRegistry, loadAtoms, Registry } from "@glyph/core";
 
 export async function loadProjectRegistry(projectDir: string): Promise<Registry> {
   const stdlibDir = findStdlibDir();

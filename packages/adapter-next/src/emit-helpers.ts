@@ -1,4 +1,4 @@
-import type { PropValue } from "@cpl/core";
+import type { PropValue } from "@glyph/core";
 
 export function escape(value: string): string {
   return value

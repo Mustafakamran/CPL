@@ -1,4 +1,4 @@
-import type { Adapter, Emitter, IRNode, FileMap, PropValue } from "@cpl/core";
+import type { Adapter, Emitter, IRNode, FileMap, PropValue } from "@glyph/core";
 
 function str(v: PropValue, fallback = ""): string {
   if (v === undefined || v === null) return fallback;
@@ -125,7 +125,7 @@ const overrideEmitters: Record<string, ComposeEmit> = {
 };
 
 function scaffoldFiles(name: string): FileMap {
-  const pkg = `com.cpl.${name.toLowerCase().replace(/[^a-z0-9]/g, "")}`;
+  const pkg = `com.glyph.${name.toLowerCase().replace(/[^a-z0-9]/g, "")}`;
   return {
     "settings.gradle.kts": `rootProject.name = "${name}"
 include(":app")
@@ -192,7 +192,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun App() {
-    __CPL_EMITTED_NODES__
+    __GLYPH_EMITTED_NODES__
 }
 `,
     "app/src/main/AndroidManifest.xml": `<manifest xmlns:android="http://schemas.android.com/apk/res/android">

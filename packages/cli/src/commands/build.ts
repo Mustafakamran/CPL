@@ -1,6 +1,6 @@
 import { resolve, dirname, join } from "node:path";
 import { mkdir, writeFile, rm } from "node:fs/promises";
-import { validateManifest, hasErrors, expand, type FileMap, type IRNode, type EmitContext } from "@cpl/core";
+import { validateManifest, hasErrors, expand, type FileMap, type IRNode, type EmitContext } from "@glyph/core";
 import { loadManifest } from "../manifest.js";
 import { loadProjectRegistry } from "../registry.js";
 import { getAdapter } from "../adapters.js";
@@ -51,7 +51,7 @@ export async function buildCommand(argv: string[]): Promise<void> {
   }
 
   if (snippets.length > 0) {
-    const marker = "__CPL_EMITTED_NODES__";
+    const marker = "__GLYPH_EMITTED_NODES__";
     for (const [p, content] of Object.entries(files)) {
       if (content.includes(marker)) {
         files[p] = content.replace(marker, snippets.join("\n"));

@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { loadAtoms } from "@cpl/core";
-import type { IRNode, EmitContext } from "@cpl/core";
+import { loadAtoms } from "@glyph/core";
+import type { IRNode, EmitContext } from "@glyph/core";
 import nextAdapter from "./index.js";
 
 const ctx: EmitContext = {
@@ -33,7 +33,7 @@ describe("adapter-next contract", () => {
   it("scaffolds a working project skeleton", async () => {
     const files = await nextAdapter.scaffold({ project: { name: "t" }, target: "web" });
     expect(files["package.json"]).toBeTruthy();
-    expect(files["src/app/page.tsx"]).toContain("__CPL_EMITTED_NODES__");
+    expect(files["src/app/page.tsx"]).toContain("__GLYPH_EMITTED_NODES__");
   });
 
   // Atoms that are legitimately no-ops on web (marker / runtime-only):

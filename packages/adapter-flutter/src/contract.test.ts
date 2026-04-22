@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { loadAtoms } from "@cpl/core";
-import type { IRNode, EmitContext } from "@cpl/core";
+import { loadAtoms } from "@glyph/core";
+import type { IRNode, EmitContext } from "@glyph/core";
 import flutterAdapter from "./index.js";
 
 const ctx: EmitContext = {

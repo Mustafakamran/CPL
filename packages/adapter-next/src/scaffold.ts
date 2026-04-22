@@ -1,4 +1,4 @@
-import type { FileMap } from "@cpl/core";
+import type { FileMap } from "@glyph/core";
 
 export function scaffoldFiles(opts: { name: string }): FileMap {
   return {
@@ -74,12 +74,12 @@ import { useState, useEffect, useMemo } from "react";
 export default function Page() {
   return (
     <>
-      __CPL_EMITTED_NODES__
+      __GLYPH_EMITTED_NODES__
     </>
   );
 }
 `,
-    "src/cpl-runtime.tsx": `"use client";
+    "src/glyph-runtime.tsx": `"use client";
 import { useEffect, useRef } from "react";
 
 export function useHaptic() {

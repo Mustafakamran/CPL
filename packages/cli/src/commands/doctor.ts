@@ -1,4 +1,4 @@
-import { validateManifest, hasErrors } from "@cpl/core";
+import { validateManifest, hasErrors } from "@glyph/core";
 import { loadManifest } from "../manifest.js";
 import { loadProjectRegistry } from "../registry.js";
 import { getAdapter } from "../adapters.js";

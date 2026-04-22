@@ -1,4 +1,4 @@
-import type { Emitter, IRNode, EmitContext, PropValue } from "@cpl/core";
+import type { Emitter, IRNode, EmitContext, PropValue } from "@glyph/core";
 import { cssSize, isExpr, stripExpr, propToValue, escape, escapeAttr } from "./emit-helpers.js";
 
 type Emit = (node: IRNode, ctx: EmitContext) => Promise<string>;
@@ -148,7 +148,7 @@ const emitters: Record<string, Emit> = {
     return `<div style={{ aspectRatio: ${JSON.stringify(String(ratio))}, width: "100%" }}>${await children(ctx, node)}</div>`;
   },
   async portal(node, ctx) {
-    return `<div data-cpl-portal>${await children(ctx, node)}</div>`;
+    return `<div data-glyph-portal>${await children(ctx, node)}</div>`;
   },
 
   // ──────────── TEXT ────────────
@@ -241,7 +241,7 @@ const emitters: Record<string, Emit> = {
     return `<iframe src="${src}" style={{ width: "100%", height: "100%", border: 0 }} />`;
   },
   async lottie(node) {
-    return `<div data-cpl-lottie-src="${escapeAttr(str(node.props.src))}" data-autoplay="${!!node.props.autoplay}" data-loop="${!!node.props.loop}" />`;
+    return `<div data-glyph-lottie-src="${escapeAttr(str(node.props.src))}" data-autoplay="${!!node.props.autoplay}" data-loop="${!!node.props.loop}" />`;
   },
 
   // ──────────── INPUT ────────────
@@ -373,7 +373,7 @@ const emitters: Record<string, Emit> = {
 
   // ──────────── STYLE ────────────
   async theme(node, ctx) {
-    return `<div data-cpl-theme>${await children(ctx, node)}</div>`;
+    return `<div data-glyph-theme>${await children(ctx, node)}</div>`;
   },
   async style(node, ctx) {
     const rules = node.props.rules;

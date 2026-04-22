@@ -2,7 +2,7 @@ import { createInterface } from "node:readline/promises";
 import { resolve } from "node:path";
 import { existsSync } from "node:fs";
 import { writeFile, mkdir } from "node:fs/promises";
-import type { Target } from "@cpl/core";
+import type { Target } from "@glyph/core";
 import { newManifest, MANIFEST_FILE } from "../manifest.js";
 import { BUILTIN_ADAPTERS, adaptersForTarget } from "../adapters.js";
 
@@ -40,7 +40,7 @@ export async function initCommand(argv: string[]): Promise<void> {
     await writeFile(path, YAML.stringify(manifest, { lineWidth: 0 }), "utf8");
 
     console.log(`\nCreated ${path}`);
-    console.log(`Next: cd ${name.trim()} && cpl add page --prop title='Home'`);
+    console.log(`Next: cd ${name.trim()} && glyph add page --prop title='Home'`);
   } finally {
     rl.close();
   }

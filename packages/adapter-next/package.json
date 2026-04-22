@@ -1,5 +1,5 @@
 {
-  "name": "@cpl/adapter-next",
+  "name": "@glyph/adapter-next",
   "version": "0.0.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -15,7 +15,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@cpl/core": "workspace:*"
+    "@glyph/core": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.5.0",

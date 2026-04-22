@@ -1,4 +1,4 @@
-import type { IRNode, PropValue } from "@cpl/core";
+import type { IRNode, PropValue } from "@glyph/core";
 import { loadManifest, saveManifest, findNodeByName } from "../manifest.js";
 import { loadProjectRegistry } from "../registry.js";
 
@@ -11,7 +11,7 @@ interface AddArgs {
 
 function parseArgs(argv: string[]): AddArgs {
   const [kind, ...rest] = argv;
-  if (!kind) throw new Error("Usage: cpl add <kind> [--name N] [--parent N] [--prop k=v ...]");
+  if (!kind) throw new Error("Usage: glyph add <kind> [--name N] [--parent N] [--prop k=v ...]");
   const args: AddArgs = { kind, props: {} };
   for (let i = 0; i < rest.length; i++) {
     const a = rest[i];
@@ -49,7 +49,7 @@ function parsePropValue(raw: string): PropValue {
 export async function addCommand(argv: string[]): Promise<void> {
   const args = parseArgs(argv);
   const { path, manifest } = await loadManifest();
-  const registry = await loadProjectRegistry(path.replace(/\/project\.cpl$/, ""));
+  const registry = await loadProjectRegistry(path.replace(/\/project\.glyph$/, ""));
   const def = registry.get(args.kind);
   if (!def) {
     const known = registry.listAll().map((p) => p.kind).sort().slice(0, 20).join(", ");

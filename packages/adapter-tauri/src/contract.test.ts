@@ -11,7 +11,7 @@ describe("adapter-tauri contract", () => {
   it("scaffolds the web project plus a Tauri Rust shell", async () => {
     const files = await tauriAdapter.scaffold({ project: { name: "t" }, target: "desktop-mac" });
     expect(files["package.json"]).toBeTruthy();
-    expect(files["src/app/page.tsx"]).toContain("__CPL_EMITTED_NODES__");
+    expect(files["src/app/page.tsx"]).toContain("__GLYPH_EMITTED_NODES__");
     expect(files["src-tauri/tauri.conf.json"]).toBeTruthy();
     expect(files["src-tauri/src/main.rs"]).toContain("tauri::Builder");
   });

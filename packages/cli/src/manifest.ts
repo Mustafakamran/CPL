@@ -2,9 +2,9 @@ import { readFile, writeFile } from "node:fs/promises";
 import { resolve, dirname } from "node:path";
 import { existsSync } from "node:fs";
 import YAML from "yaml";
-import type { Manifest, IRNode, Target } from "@cpl/core";
+import type { Manifest, IRNode, Target } from "@glyph/core";
 
-export const MANIFEST_FILE = "project.cpl";
+export const MANIFEST_FILE = "project.glyph";
 
 export async function loadManifest(cwd = process.cwd()): Promise<{ path: string; manifest: Manifest }> {
   let dir = cwd;

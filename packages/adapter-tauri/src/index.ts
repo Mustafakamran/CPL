@@ -1,5 +1,5 @@
-import type { Adapter, FileMap } from "@cpl/core";
-import nextAdapter from "@cpl/adapter-next";
+import type { Adapter, FileMap } from "@glyph/core";
+import nextAdapter from "@glyph/adapter-next";
 
 function tauriShell(name: string): FileMap {
   return {
@@ -26,7 +26,7 @@ custom-protocol = ["tauri/custom-protocol"]
       {
         productName: name,
         version: "0.0.0",
-        identifier: `com.cpl.${name}`,
+        identifier: `com.glyph.${name}`,
         build: {
           beforeDevCommand: "npm run dev",
           devUrl: "http://localhost:3000",

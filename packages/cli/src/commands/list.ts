@@ -1,4 +1,4 @@
-import { loadAtoms, buildRegistry } from "@cpl/core";
+import { loadAtoms, buildRegistry } from "@glyph/core";
 import { loadProjectRegistry } from "../registry.js";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
@@ -9,7 +9,7 @@ export async function listCommand(argv: string[]): Promise<void> {
   const catIdx = argv.indexOf("--category");
   const category = catIdx >= 0 ? argv[catIdx + 1] : undefined;
 
-  const hasManifest = existsSync(resolve(process.cwd(), "project.cpl"));
+  const hasManifest = existsSync(resolve(process.cwd(), "project.glyph"));
   const registry = hasManifest
     ? await loadProjectRegistry(process.cwd())
     : await buildRegistry({ atoms: loadAtoms() });

@@ -58,7 +58,7 @@ export class Registry {
       const p = join(dir, e.name);
       if (e.isDirectory()) {
         await this.loadCompoundsFromDir(p);
-      } else if (e.isFile() && e.name.endsWith(".cpl")) {
+      } else if (e.isFile() && e.name.endsWith(".glyph")) {
         const src = await readFile(p, "utf8");
         const def = parseCompound(src, p);
         this.registerCompound(def);

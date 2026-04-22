@@ -1,5 +1,5 @@
-target: web
-adapter: next
+target: android
+adapter: compose
 project:
   name: landing
 nodes:
@@ -12,7 +12,7 @@ nodes:
         children:
           - kind: topbar
             props:
-              title: CPL Demo
+              title: Glyph Demo
             children:
               - kind: link
                 props:
@@ -34,7 +34,7 @@ nodes:
                 children:
                   - kind: heading
                     props:
-                      value: "Common Programming Language"
+                      value: "Glyph"
                       level: "1"
                   - kind: paragraph
                     props:
@@ -87,7 +87,7 @@ nodes:
                               level: "3"
                           - kind: paragraph
                             props:
-                              value: "Composed in CPL itself; cross-platform for free."
+                              value: "Composed in Glyph itself; cross-platform for free."
                   - kind: card
                     props: {}
                     children:

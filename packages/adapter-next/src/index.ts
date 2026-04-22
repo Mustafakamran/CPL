@@ -1,4 +1,4 @@
-import type { Adapter } from "@cpl/core";
+import type { Adapter } from "@glyph/core";
 import { scaffoldFiles } from "./scaffold.js";
 import { emit, ATOM_KINDS } from "./emit.js";
 

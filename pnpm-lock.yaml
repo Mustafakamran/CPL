@@ -20,7 +20,7 @@ importers:
 
   packages/adapter-compose:
     dependencies:
-      '@cpl/core':
+      '@glyph/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -30,7 +30,7 @@ importers:
 
   packages/adapter-flutter:
     dependencies:
-      '@cpl/core':
+      '@glyph/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -40,7 +40,7 @@ importers:
 
   packages/adapter-next:
     dependencies:
-      '@cpl/core':
+      '@glyph/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -53,10 +53,10 @@ importers:
 
   packages/adapter-tauri:
     dependencies:
-      '@cpl/adapter-next':
+      '@glyph/adapter-next':
         specifier: workspace:*
         version: link:../adapter-next
-      '@cpl/core':
+      '@glyph/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -66,19 +66,19 @@ importers:
 
   packages/cli:
     dependencies:
-      '@cpl/adapter-compose':
+      '@glyph/adapter-compose':
         specifier: workspace:*
         version: link:../adapter-compose
-      '@cpl/adapter-flutter':
+      '@glyph/adapter-flutter':
         specifier: workspace:*
         version: link:../adapter-flutter
-      '@cpl/adapter-next':
+      '@glyph/adapter-next':
         specifier: workspace:*
         version: link:../adapter-next
-      '@cpl/adapter-tauri':
+      '@glyph/adapter-tauri':
         specifier: workspace:*
         version: link:../adapter-tauri
-      '@cpl/core':
+      '@glyph/core':
         specifier: workspace:*
         version: link:../core
       yaml:

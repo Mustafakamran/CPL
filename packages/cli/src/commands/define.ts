@@ -5,7 +5,7 @@ import { loadManifest } from "../manifest.js";
 
 export async function defineCommand(argv: string[]): Promise<void> {
   const [kind] = argv;
-  if (!kind) throw new Error("Usage: cpl define <kind>");
+  if (!kind) throw new Error("Usage: glyph define <kind>");
   if (!/^[a-z][a-z0-9-]*$/.test(kind)) {
     throw new Error(`Invalid kind name '${kind}'. Use kebab-case.`);
   }
@@ -13,7 +13,7 @@ export async function defineCommand(argv: string[]): Promise<void> {
   const projectDir = dirname(path);
   const compDir = resolve(projectDir, "components");
   await mkdir(compDir, { recursive: true });
-  const file = resolve(compDir, `${kind}.cpl`);
+  const file = resolve(compDir, `${kind}.glyph`);
   if (existsSync(file)) throw new Error(`Already exists: ${file}`);
   const template = `kind: ${kind}
 category: ui

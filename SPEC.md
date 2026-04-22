@@ -1,16 +1,16 @@
-# CPL Language Specification (v0)
+# Glyph Language Specification (v0)
 
-CPL — Common Programming Language — is a framework-agnostic language whose
-vocabulary is everyday English. Programs are described as a tree of named
-primitives. A compiler translates the tree into real code for a chosen
-platform (web, Android, desktop, …) through pluggable **adapters**.
+Glyph is a framework-agnostic language whose vocabulary is everyday English.
+Programs are described as a tree of named primitives. A compiler translates
+the tree into real code for a chosen platform (web, Android, desktop, …)
+through pluggable **adapters**.
 
 This document is the normative spec for v0.
 
 ## Architecture layers
 
 ```
-Manifest (project.cpl, YAML)
+Manifest (project.glyph, YAML)
     ↓ parse + validate
 IR (target- and adapter-independent AST)
     ↓ expand compounds to atoms
@@ -31,7 +31,7 @@ adapter is a test failure (see `adapter-contract.test.ts`). v0 ships 60 atoms.
 
 ### Compound
 
-A primitive defined in CPL itself — a `.cpl` file that declares its own
+A primitive defined in Glyph itself — a `.glyph` file that declares its own
 `kind`, `props`, and a `body` composed of atoms and/or other compounds. No
 per-adapter work is required to ship a compound: it expands to atoms, and the
 adapter already knows how to emit atoms.
@@ -39,7 +39,7 @@ adapter already knows how to emit atoms.
 Compounds may ship in:
 - `packages/stdlib/` — official standard library (~150 planned; 34 in v0)
 - `./components/` in any project — user-defined compounds
-- `@org/cpl-stdlib-*` packages — third-party compound packs
+- `@org/glyph-stdlib-*` packages — third-party compound packs
 
 ## Adapter interface
 
@@ -56,7 +56,7 @@ interface Adapter {
 
 An adapter declares which targets it supports. One target can be served by
 multiple adapters (e.g., web can be served by `next` or `flutter`). At
-`cpl init` the user picks (target, adapter).
+`glyph init` the user picks (target, adapter).
 
 ### Compound override
 
@@ -69,7 +69,7 @@ v0 demonstrates this mechanism in `adapter-compose`:
 - `floating-action-button` → Material 3 `FloatingActionButton`
 - `action-sheet` → `ModalBottomSheet`
 
-## Manifest format: `project.cpl`
+## Manifest format: `project.glyph`
 
 YAML. Required fields: `target`, `adapter`, `project.name`, `nodes`.
 
@@ -105,7 +105,7 @@ Every node has:
 `web`, `android`, `ios`, `desktop-mac`, `desktop-win`, `desktop-linux`. v0
 does not ship an iOS adapter, but the target is reserved.
 
-## Compound definition format: `*.cpl`
+## Compound definition format: `*.glyph`
 
 Also YAML. Required: `kind`, `category`, `body`.
 
@@ -158,19 +158,19 @@ A prop schema entry may also specify:
 
 A prop typed `expr` holds a code fragment that is emitted as-is in the target
 language (wrapped in `{{ }}` to distinguish it from a literal string). It is
-the primary mechanism by which CPL attaches target-language behavior to
+the primary mechanism by which Glyph attaches target-language behavior to
 primitives.
 
 ## CLI
 
 ```
-cpl init                      Interactive: pick target, adapter, name
-cpl add <kind> [opts]         Append node: --name, --parent, --prop k=v
-cpl define <kind>             Scaffold ./components/<kind>.cpl
-cpl list [--atoms|--compounds] [--category C]
-cpl adapters                  Installed adapters and their supported targets
-cpl build [--out DIR]         Compile manifest → framework project (default ./out)
-cpl doctor                    Validate manifest, adapter, vocabulary
+glyph init                      Interactive: pick target, adapter, name
+glyph add <kind> [opts]         Append node: --name, --parent, --prop k=v
+glyph define <kind>              Scaffold ./components/<kind>.glyph
+glyph list [--atoms|--compounds] [--category C]
+glyph adapters                  Installed adapters and their supported targets
+glyph build [--out DIR]         Compile manifest → framework project (default ./out)
+glyph doctor                    Validate manifest, adapter, vocabulary
 ```
 
 ## Naming rules
@@ -181,7 +181,7 @@ cpl doctor                    Validate manifest, adapter, vocabulary
 
 ## Growing the vocabulary
 
-- New compound → drop a `.cpl` file; runs on every adapter automatically.
+- New compound → drop a `.glyph` file; runs on every adapter automatically.
 - New atom → add a schema file; every adapter must add an emitter. The
   adapter-contract test will fail until they do.
 - New adapter → new `packages/adapter-<id>/` package implementing `Adapter`;

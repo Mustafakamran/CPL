@@ -7,16 +7,16 @@ import { doctorCommand } from "./commands/doctor.js";
 import { buildCommand } from "./commands/build.js";
 import { defineCommand } from "./commands/define.js";
 
-const HELP = `cpl — Common Programming Language
+const HELP = `glyph — the common language that compiles anywhere
 
 Usage:
-  cpl init                       Create a new project
-  cpl add <kind> [opts]          Append a primitive to the manifest
-  cpl define <kind>              Scaffold a new user compound
-  cpl list [--atoms|--compounds] [--category C]
-  cpl adapters                   Print installed adapters and their targets
-  cpl build [--out DIR]          Compile manifest → framework project
-  cpl doctor                     Validate manifest, adapter, vocabulary
+  glyph init                       Create a new project
+  glyph add <kind> [opts]          Append a primitive to the manifest
+  glyph define <kind>              Scaffold a new user compound
+  glyph list [--atoms|--compounds] [--category C]
+  glyph adapters                   Print installed adapters and their targets
+  glyph build [--out DIR]          Compile manifest → framework project
+  glyph doctor                     Validate manifest, adapter, vocabulary
 `;
 
 async function main(): Promise<void> {
